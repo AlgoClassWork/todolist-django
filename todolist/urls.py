@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from todo.views import index
+
 urlpatterns = [
+    #http://127.0.0.1:8000/admin/
     path('admin/', admin.site.urls),
+    #http://127.0.0.1:8000
+    path('', index)
 ]
+

@@ -1,8 +1,69 @@
-<h2> Мой список задач: </h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список дел</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6; /* Светло-серый фон */
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-{% for task in tasks %}
+        h1 {
+            color: #2c3e50; /* Темно-синий заголовок */
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+        }
 
-    <p> {{task}} </p>
+        .task {
+            background-color: #ffffff; /* Белый фон для задачи */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            width: 100%;
+            max-width: 500px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .task:hover {
+            transform: translateY(-3px);
+        }
+
+        .task p {
+            margin: 0;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .task .completed {
+            text-decoration: line-through;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Мой список дел</h1>
+    {% for task in tasks %}
+        <div class="task">
+            {% if task.completed %}
+                <p class="completed"> {{task.title}} </p>
+            {% else %}
+                <p> {{task.title}} </p>
+            {% endif %}
+        </div>
+    {% endfor %}
     
-{% endfor %}
-
+</body>
+</html>

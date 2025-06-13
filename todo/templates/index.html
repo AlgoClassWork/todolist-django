@@ -24,6 +24,54 @@
             text-align: center;
         }
 
+        /* Стили для формы добавления задачи */
+        form {
+            display: flex;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Легкая тень для формы */
+            border-radius: 8px;
+            overflow: hidden; /* Обрезаем края для input и button */
+        }
+
+        form input[type="text"] {
+            flex-grow: 1; /* Позволяет полю ввода занять все доступное пространство */
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-right: none; /* Убираем правую границу для плавного перехода к кнопке */
+            border-radius: 8px 0 0 8px; /* Скругляем только левые углы */
+            font-size: 1em;
+            color: #555;
+            outline: none; /* Убираем стандартную обводку при фокусе */
+            transition: border-color 0.3s ease;
+        }
+
+        form input[type="text"]:focus {
+            border-color: #007bff; /* Цвет границы при фокусе */
+        }
+
+        form button[type="submit"] {
+            padding: 12px 25px;
+            background-color: #007bff; /* Синяя кнопка */
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0; /* Скругляем только правые углы */
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            white-space: nowrap; /* Предотвращаем перенос текста кнопки */
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #0056b3; /* Темнее синий при наведении */
+            transform: translateY(-1px); /* Небольшой подъем при наведении */
+        }
+
+        form button[type="submit"]:active {
+            transform: translateY(0); /* Возврат на место при нажатии */
+        }
+
         .task {
             background-color: #ffffff; /* Белый фон для задачи */
             border-radius: 8px;
@@ -55,6 +103,13 @@
 <body>
 
     <h1>Мой список дел</h1>
+
+    <form action="{% url 'add' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Введите вашу задачу" required>
+        <button type="submit"> Добавить </button>
+    </form>
+
     {% for task in tasks %}
         <div class="task">
             {% if task.completed %}

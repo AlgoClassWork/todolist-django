@@ -4,121 +4,186 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список дел</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+    :root {
+        --font-main: 'Inter', sans-serif;
+        --color-bg: #f9fafb;
+        --color-card: #ffffff;
+        --color-border: #e2e8f0;
+        --color-text: #1a202c;
+        --color-text-muted: #718096;
+        --color-accent: #3b82f6;
+        --color-accent-hover: #2563eb;
+        --color-danger: #ef4444;
+        --radius: 8px;
+        --shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px 20px;
+        font-family: var(--font-main);
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .todo-container {
+        background: var(--color-card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 30px;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    form {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+
+    form input[type="text"] {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        font-size: 1rem;
+        transition: border 0.2s ease;
+    }
+
+    form input[type="text"]:focus {
+        border-color: var(--color-accent);
+        outline: none;
+    }
+
+    form button[type="submit"] {
+        background: var(--color-accent);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    form button[type="submit"]:hover {
+        background: var(--color-accent-hover);
+    }
+
+    .task {
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: 14px 18px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: box-shadow 0.2s ease;
+        
+    }
+
+    .task a {
+        text-decoration: none;
+    }
+
+    .task:hover {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .task p {
+        margin: 0;
+        font-size: 1rem;
+        color: var(--color-text);
+    }
+
+    .task .completed {
+        text-decoration: line-through;
+        color: var(--color-text-muted);
+        font-style: italic;
+    }
+
+    .delete-btn {
+        background: none;
+        border: none;
+        color: var(--color-danger);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.2s ease;
+        text-decoration: none;
+    }
+
+    .delete-btn:hover {
+        color: darkred;
+    }
+
+    @media (max-width: 600px) {
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7f6; /* Светло-серый фон */
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 20px 12px;
         }
 
         h1 {
-            color: #2c3e50; /* Темно-синий заголовок */
+            font-size: 2rem;
             margin-bottom: 30px;
-            font-size: 2.5em;
-            text-align: center;
         }
 
-        /* Стили для формы добавления задачи */
+        .todo-container {
+            padding: 20px;
+        }
+
         form {
-            display: flex;
-            margin-bottom: 30px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Легкая тень для формы */
-            border-radius: 8px;
-            overflow: hidden; /* Обрезаем края для input и button */
+            flex-direction: column;
         }
 
-        form input[type="text"] {
-            flex-grow: 1; /* Позволяет полю ввода занять все доступное пространство */
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-right: none; /* Убираем правую границу для плавного перехода к кнопке */
-            border-radius: 8px 0 0 8px; /* Скругляем только левые углы */
-            font-size: 1em;
-            color: #555;
-            outline: none; /* Убираем стандартную обводку при фокусе */
-            transition: border-color 0.3s ease;
-        }
-
-        form input[type="text"]:focus {
-            border-color: #007bff; /* Цвет границы при фокусе */
-        }
-
+        form input[type="text"],
         form button[type="submit"] {
-            padding: 12px 25px;
-            background-color: #007bff; /* Синяя кнопка */
-            color: white;
-            border: none;
-            border-radius: 0 8px 8px 0; /* Скругляем только правые углы */
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            white-space: nowrap; /* Предотвращаем перенос текста кнопки */
-        }
-
-        form button[type="submit"]:hover {
-            background-color: #0056b3; /* Темнее синий при наведении */
-            transform: translateY(-1px); /* Небольшой подъем при наведении */
-        }
-
-        form button[type="submit"]:active {
-            transform: translateY(0); /* Возврат на место при нажатии */
-        }
-
-        .task {
-            background-color: #ffffff; /* Белый фон для задачи */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            padding: 15px 20px;
             width: 100%;
-            max-width: 500px;
-            transition: transform 0.2s ease-in-out;
         }
-
-        .task:hover {
-            transform: translateY(-3px);
-        }
-
-        .task p {
-            margin: 0;
-            font-size: 1.1em;
-            color: #555;
-        }
-
-        .task .completed {
-            text-decoration: line-through;
-            color: #999;
-            font-style: italic;
-        }
+    }
     </style>
 </head>
 <body>
 
     <h1>Мой список дел</h1>
 
-    <form action="{% url 'add' %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="title" placeholder="Введите вашу задачу" required>
-        <button type="submit"> Добавить </button>
-    </form>
+    <div class="todo-container">
+        <form action="{% url 'add' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Добавить новую задачу..." required>
+            <button type="submit"> Добавить </button>
+        </form>
 
-    {% for task in tasks %}
-        <div class="task">
-            {% if task.completed %}
-                <p class="completed"> {{task.title}} </p>
-            {% else %}
-                <p> {{task.title}} </p>
-            {% endif %}
-        </div>
-    {% endfor %}
+        {% for task in tasks %}
+            <div class="task">
+                <a href="{% url 'complete_task' task.id %}">
+                    {% if task.completed %}
+                        <p class="completed"> {{task.title}} </p>
+                    {% else %}
+                        <p> {{task.title}} </p>
+                    {% endif %}
+                </a>
+                <a href="" class="delete-btn"> [x] </a>
+            </div>
+        {% endfor %}
+    </div>
     
 </body>
 </html>

@@ -180,7 +180,7 @@
                         <p> {{task.title}} </p>
                     {% endif %}
                 </a>
-                <a href="" class="delete-btn"> [x] </a>
+                <a href="{% url 'delete_task' task.id %}" class="delete-btn"> [x] </a>
             </div>
         {% endfor %}
     </div>

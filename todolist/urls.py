@@ -17,14 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from todo.views import index, add_task
+from todo.views import index, add_task, complete_task, delete_task
 
 urlpatterns = [
     #http://127.0.0.1:8000/admin/
     path('admin/', admin.site.urls),
+    #http://127.0.0.1:8000/delete/10
+    path('delete/<int:task_id>/', delete_task, name='delete_task'),
+    #http://127.0.0.1:8000/complete/5
+    path('complete/<int:task_id>/', complete_task, name='complete_task'),
     #http://127.0.0.1:8000/add
     path('add/', add_task, name='add'),
     #http://127.0.0.1:8000
     path('', index, name='home'),
 ]
-
